@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Getting Started with Image Description Generator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with Create React App.
 
 ## Available Scripts
 
@@ -9,7 +9,7 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open http://localhost:3000 to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
@@ -17,7 +17,7 @@ You will also see any lint errors in the console.
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+See the section about running tests for more information.
 
 ### `npm run build`
 
@@ -27,7 +27,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+See the section about deployment for more information.
 
 ### `npm run eject`
 
@@ -41,6 +41,22 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+You can learn more in the Create React App documentation.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To learn React, check out the React documentation.
+
+## About Image Description Generator
+
+This application allows you to generate descriptions for images. It uses the Gemini Pro Vision model to generate the descriptions. You can upload an image and it will generate a description for you.
+
+Remember to add your API key to a `.env` file at the root of your project with the name `REACT_APP_GEMINI_API_KEY`.
+
+Here's an example of how to use it:
+
+```javascript
+const API_KEY = process.env.REACT_APP_GEMINI_API_KEY || "";
+
+const MODEL_NAME = "gemini-pro-vision";
+
+// ... rest of your code
+```
