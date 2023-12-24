@@ -1,38 +1,40 @@
-.App {
+/* App.css */
+
+body {
+  background: rgb(0, 1, 44);
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+h1 {
   text-align: center;
+  color: white; /* Text color to match the gradient background */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+  padding: 2rem;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.uploader-generator-box {
+  padding: 3rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  border-radius: 10px;
+  border: 2px solid blueviolet;
+  overflow: hidden;
+  background: rgb(4, 5, 57);
+}
+
+.add-new-btn-container {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  align-items: center;
+  margin-top: -40px;
 }

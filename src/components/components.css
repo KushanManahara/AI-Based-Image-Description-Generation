@@ -1,0 +1,61 @@
+/* components.css */
+/* Style for the container div */
+div {
+  margin-bottom: 20px;
+}
+
+/* Style for the label */
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Style for the file input */
+input[type="file"] {
+  display: none;
+}
+
+/* Style for the custom file input button */
+label::after {
+  content: "Select File";
+  display: inline-block;
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  margin-left: 30px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* Hover effect for the custom file input button */
+label:hover::after {
+  background-color: #45a049;
+}
+
+div {
+  margin-bottom: 20px;
+}
+
+/* Style for the generated description container */
+.generated-description {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 10px;
+  color: #a7a7a7;
+  font-size: 18px;
+}
+
+.img-input-label {
+  color: #a7a7a7;
+  font-size: large;
+}
+
+.image-input-container {
+  padding-left: 10px;
+}
+/* Style for the generated description heading */
+h2 {
+  color: #a7a7a7;
+  margin-bottom: 10px;
+}
