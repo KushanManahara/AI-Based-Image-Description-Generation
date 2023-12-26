@@ -5,7 +5,6 @@ import RoundedButton from "./components/RoundedButton";
 import "./App.css";
 import ImagePreview from "./components/ImagePreview";
 import { Row, Col } from "react-bootstrap";
-import { Link, animateScroll as scroll } from "react-scroll";
 
 const API_KEY = process.env.REACT_APP_GEMINI_API_KEY || "";
 
