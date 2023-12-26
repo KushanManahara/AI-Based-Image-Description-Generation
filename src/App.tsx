@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ImageUploader from "./components/ImageUploader";
 import DescriptionGenerator from "./components/DescriptionGenerator";
 import RoundedButton from "./components/RoundedButton";
 import "./App.css";
 import ImagePreview from "./components/ImagePreview";
 import { Row, Col } from "react-bootstrap";
+import { Link, animateScroll as scroll } from "react-scroll";
 
 const API_KEY = process.env.REACT_APP_GEMINI_API_KEY || "";
 
@@ -20,6 +21,17 @@ const App: React.FC = () => {
   const [prompts, setPrompts] = useState<Prompt[]>([
     { imageFile: null, description: null, imageData: null },
   ]);
+  const lastPromptRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (lastPromptRef.current) {
+      lastPromptRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest",
+      });
+    }
+  }, [prompts]);
 
   const handleFileUpload = (file: File, index: number) => {
     console.log("index", index);
@@ -65,6 +77,7 @@ const App: React.FC = () => {
         <div
           key={promptIndex}
           className="generate-option d-flex justify-content-center"
+          ref={promptIndex === prompts.length - 1 ? lastPromptRef : null}
         >
           {promptIndex === prompts.length - 1 ? (
             <div className="uploader-generator-box current-box">

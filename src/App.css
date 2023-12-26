@@ -11,6 +11,9 @@ body {
   margin: 0;
 }
 
+html {
+  scroll-behavior: smooth;  
+}
 h1 {
   text-align: center;
   color: #ffffff;
