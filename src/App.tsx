@@ -1,125 +1,31 @@
-// import React, { useState } from "react";
-// import ImageUploader from "./components/ImageUploader";
-// import DescriptionGenerator from "./components/DescriptionGenerator";
-// import "react-bootstrap";
-
-// import "./App.css";
-// import { Button } from "react-bootstrap";
-// import RoundedButton from "./components/RoundedButton";
-
-// const API_KEY = "AIzaSyCoR9Z1KBj0hU7KR7x5IRdEYpNyJr7rfsw";
-// const MODEL_NAME = "gemini-pro-vision";
-
-// const App: React.FC = () => {
-//   const [imageData, setImageData] = useState<string | null>(null);
-
-//   const handleFileUpload = (file: File) => {
-//     const reader = new FileReader();
-//     reader.onload = function (e) {
-//       const imageData = e.target?.result?.toString().split(",")[1];
-//       setImageData(imageData || null);
-//     };
-//     reader.readAsDataURL(file);
-//   };
-
-//   return (
-//     <div className="container flex flex-grow">
-//       <h1>Image Description Generator</h1>
-
-//       <div className="uploader-generator-box">
-//         <ImageUploader onFileUpload={handleFileUpload} />
-//         <DescriptionGenerator
-//           apiKey={API_KEY}
-//           modelName={MODEL_NAME}
-//           imageData={imageData}
-//         />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default App;
-
-// ... (previous imports)
-
-// --------------------------------------------------------------------------
-
-// const App: React.FC = () => {
-//   const [imageData, setImageData] = useState<string | null>(null);
-//   const [generateOptions, setGenerateOptions] = useState<string[]>([
-//     "option 01",
-//   ]);
-
-//   const handleFileUpload = (file: File) => {
-//     const reader = new FileReader();
-//     reader.onload = function (e) {
-//       const imageData = e.target?.result?.toString().split(",")[1];
-//       setImageData(imageData || null);
-//     };
-//     reader.readAsDataURL(file);
-//   };
-
-//   const handleAddOption = () => {
-//     setGenerateOptions((prevOptions) => [...prevOptions, "New Option"]);
-//   };
-
-//   return (
-//     <div className="container flex flex-grow">
-//       <h1>Image Description Generator</h1>
-
-//       {generateOptions.map((option, index) => (
-//         <div key={index} className="generate-option">
-//           <div className="uploader-generator-box">
-//             <ImageUploader onFileUpload={handleFileUpload} />
-//             <DescriptionGenerator
-//               apiKey={API_KEY}
-//               modelName={MODEL_NAME}
-//               imageData={imageData}
-//             />
-//           </div>
-//           {index == generateOptions.length - 1 && (
-//             <div className="add-new-btn-container">
-//               <RoundedButton onClick={handleAddOption}>
-//                 Add new prompt
-//               </RoundedButton>
-//             </div>
-//           )}
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default App;
-
-// ---------------------------------------------------------------------------------
-
 import React, { useState } from "react";
 import ImageUploader from "./components/ImageUploader";
 import DescriptionGenerator from "./components/DescriptionGenerator";
 import RoundedButton from "./components/RoundedButton";
 import "./App.css";
+import ImagePreview from "./components/ImagePreview";
+import { Row, Col } from "react-bootstrap";
 
 const API_KEY = process.env.REACT_APP_GEMINI_API_KEY || "";
 
-// const API_KEY = "AIzaSyCoR9Z1KBj0hU7KR7x5IRdEYpNyJr7rfsw";
 const MODEL_NAME = "gemini-pro-vision";
 
 interface Prompt {
-  imageData: string | null;
   imageFile: File | null;
   description: string | null;
+  imageData: string | null;
 }
 
 const App: React.FC = () => {
   const [prompts, setPrompts] = useState<Prompt[]>([
-    { imageData: null, imageFile: null, description: null },
+    { imageFile: null, description: null, imageData: null },
   ]);
 
   const handleFileUpload = (file: File, index: number) => {
+    console.log("index", index);
     const reader = new FileReader();
-    reader.onload = function (e) {
-      const imageData = e.target?.result?.toString().split(",")[1];
+    reader.onload = function (event) {
+      const imageData = event.target?.result?.toString().split(",")[1];
       setPrompts((prevPrompts) => {
         const updatedPrompts = [...prevPrompts];
         if (imageData) {
@@ -130,6 +36,17 @@ const App: React.FC = () => {
       });
     };
     reader.readAsDataURL(file);
+    console.log("imageData", index);
+  };
+
+  const handleGenerateDescription = (index: number, description: string) => {
+    console.log("description in app.tsx : ", description);
+    console.log("des index : ", index);
+    setPrompts((prevPrompts) => {
+      const updatedPrompts = [...prevPrompts];
+      updatedPrompts[index].description = description;
+      return updatedPrompts;
+    });
   };
 
   const handleAddOption = () => {
@@ -137,30 +54,59 @@ const App: React.FC = () => {
       ...prevPrompts,
       { imageData: null, imageFile: null, description: null },
     ]);
+    console.log("prompts.length :", prompts.length);
   };
 
   return (
     <div className="container flex flex-grow">
       <h1>Image Description Generator</h1>
 
-      {prompts.map((prompt, index) => (
-        <div key={index} className="generate-option">
-          <div className="uploader-generator-box">
-            <ImageUploader
-              onFileUpload={(file: File) => handleFileUpload(file, index)}
-            />
-            <DescriptionGenerator
-              apiKey={API_KEY}
-              modelName={MODEL_NAME}
-              imageData={prompt.imageData}
-            />
-          </div>
+      {prompts.map((prompt, promptIndex) => (
+        <div key={promptIndex} className="generate-option">
+          {promptIndex === prompts.length - 1 ? (
+            <div className="uploader-generator-box">
+              {/* Render ImageUploader and DescriptionGenerator only for the last prompt */}
+              <ImageUploader
+                onFileUpload={(file: File) =>
+                  handleFileUpload(file, promptIndex)
+                }
+              />
+              <Row>
+                <Col md={2}>
+                  <ImagePreview file={prompt.imageFile} />
+                </Col>
+                <Col md={6}>
+                  {prompt.imageData && (
+                    <DescriptionGenerator
+                      apiKey={API_KEY}
+                      modelName={MODEL_NAME}
+                      imageData={prompt.imageData}
+                      onChangeDescription={(description: string) =>
+                        handleGenerateDescription(promptIndex, description)
+                      }
+                    />
+                  )}
+                </Col>
+              </Row>
+            </div>
+          ) : (
+            <div className="generated-description">
+              <div>
+                <ImagePreview file={prompt.imageFile} />
+                <p>{prompt.description}</p>
+              </div>
+            </div>
+          )}
+
+          {promptIndex === prompts.length - 1 && prompt.description != null && (
+            <div className="add-new-btn-container">
+              <RoundedButton onClick={handleAddOption}>
+                Add new prompt
+              </RoundedButton>
+            </div>
+          )}
         </div>
       ))}
-
-      <div className="add-new-btn-container">
-        <RoundedButton onClick={handleAddOption}>Add new prompt</RoundedButton>
-      </div>
     </div>
   );
 };

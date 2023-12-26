@@ -9,22 +9,29 @@ interface ImageUploaderProps {
 }
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onFileUpload }) => {
-  const [imageFile, setImageFile] = useState<File>();
+  // const [imageFile, setImageFile] = useState<File>();
 
-  const handleInputFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files && e.target.files[0];
+  const handleInputFileChange = async (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files && event.target.files[0];
     if (file) {
-      setImageFile(file);
-      console.log("File selected");
+      // await setImageFile(file);
+      // console.log("File selected", file);
+      onFileUpload(file);
+      console.log("File uploaded", file);
     }
   };
 
-  const handleGenerate = () => {
-    if (imageFile) {
-      onFileUpload(imageFile);
-      console.log("generated", imageFile);
-    }
-  };
+  // const handleGenerate = () => {
+  //   if (imageFile) {
+  //     onFileUpload(imageFile);
+  //     // console.log("generated", imageFile);
+  //   } else {
+  //     console.log("else", imageFile);
+  //     // console.log("no image data found");
+  //   }
+  // };
 
   return (
     <div className="image-input-container">
@@ -38,7 +45,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onFileUpload }) => {
         accept="image/*"
         onChange={handleInputFileChange}
       />
-      <button onClick={handleGenerate}>Generate Description</button>
+      {/* <button onClick={handleGenerate}>Generate Description</button> */}
     </div>
   );
 };

@@ -109,18 +109,18 @@ interface DescriptionGeneratorProps {
   apiKey: string;
   modelName: string;
   imageData: string | null;
+  onChangeDescription: any;
 }
 
 const DescriptionGenerator: React.FC<DescriptionGeneratorProps> = ({
   apiKey,
   modelName,
   imageData,
+  onChangeDescription,
 }) => {
-  const [generatedDescription, setGeneratedDescription] = useState<
-    string | null
-  >(null);
-
-  const handleGenerateDescription = async () => {
+  const [generatedDescription, setGeneratedDescription] = useState<string>();
+  const [generating, setGenerating] = useState(false);
+  const generateDescription = async () => {
     if (!imageData) {
       console.log("no image data");
       return;
@@ -146,7 +146,8 @@ const DescriptionGenerator: React.FC<DescriptionGeneratorProps> = ({
 
     const parts = [
       {
-        text: "Describe what this image with more explanation:\n",
+        text: "give me a explanation for this image.:\n",
+        // text: "give me a better superb explanation for this image. what is this image, important, and more details.:\n",
       },
       {
         inlineData: {
@@ -165,29 +166,49 @@ const DescriptionGenerator: React.FC<DescriptionGeneratorProps> = ({
 
       const response = result.response;
       setGeneratedDescription(response.text());
+      // console.log("response.text", response.text());
+      return response.text();
+      // console.log("response.text()", response.text());
+      // console.log("generatedDescription", generatedDescription);
     } catch (error) {
       console.error(error);
       setGeneratedDescription("Error generating description.");
     }
   };
 
-  useEffect(() => {
-    // Optional: You can generate the description immediately when the component mounts
-    handleGenerateDescription();
-  }, [imageData]);
+  const handleGenerateDescription = async () => {
+    console.log("Start generating description");
+    setGenerating(true);
+    const res = await generateDescription();
+    console.log("generatedDescription : ", res);
+    onChangeDescription(res);
+    console.log("Finished generating description");
+    setGenerating(false);
+    return res;
+  };
 
   return (
     <>
-      {generatedDescription !== null && (
-        <div className="generated-description">
-          <h2>Generated Description</h2>
-          <TypeAnimation
-            sequence={[generatedDescription]}
-            wrapper="span"
-            speed={90}
-          />
-        </div>
-      )}
+      {/* {generatedDescription !== null && ( */}
+      <div className="generated-description">
+        <button onClick={handleGenerateDescription}>
+          Generate Description
+        </button>
+
+        {generatedDescription && (
+          <>
+            <h2>Generated Description</h2>
+            <TypeAnimation
+              sequence={[
+                generatedDescription || "Failed to generate description",
+              ]}
+              wrapper="span"
+              speed={90}
+            />
+          </>
+        )}
+      </div>
+      {/* )} */}
     </>
   );
 };
