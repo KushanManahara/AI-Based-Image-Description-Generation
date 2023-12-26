@@ -3,6 +3,7 @@
 import React, { ChangeEvent, useState } from "react";
 import "./components.css";
 import "react-bootstrap";
+import Form from "react-bootstrap/Form";
 
 interface ImageUploaderProps {
   onFileUpload: (file: File) => void;
@@ -23,28 +24,28 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onFileUpload }) => {
     }
   };
 
-  // const handleGenerate = () => {
-  //   if (imageFile) {
-  //     onFileUpload(imageFile);
-  //     // console.log("generated", imageFile);
-  //   } else {
-  //     console.log("else", imageFile);
-  //     // console.log("no image data found");
-  //   }
-  // };
-
   return (
-    <div className="image-input-container">
-      <label className="img-input-label" htmlFor="imageInput">
+    <div>
+      {/* <div className="image-input-container"> */}
+      {/* <label className="img-input-label" htmlFor="imageInput">
         Select an image
-      </label>
-      <input
+      </label> */}
+      <Form.Group controlId="formFileLg" className="mb-3">
+        <Form.Control
+          type="file"
+          size="lg"
+          onChange={handleInputFileChange}
+          accept="image/*"
+          className="transparent-input"
+        />
+      </Form.Group>
+      {/* <input
         type="file"
         id="imageInput"
         name="image"
         accept="image/*"
         onChange={handleInputFileChange}
-      />
+      /> */}
       {/* <button onClick={handleGenerate}>Generate Description</button> */}
     </div>
   );

@@ -96,14 +96,16 @@
 
 // export default DescriptionGenerator;
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TypeAnimation } from "react-type-animation";
+import "./components.css";
 
 import {
   GoogleGenerativeAI,
   HarmCategory,
   HarmBlockThreshold,
 } from "@google/generative-ai";
+import PropagateLoader from "react-spinners/PropagateLoader";
 
 interface DescriptionGeneratorProps {
   apiKey: string;
@@ -141,13 +143,24 @@ const DescriptionGenerator: React.FC<DescriptionGeneratorProps> = ({
         category: HarmCategory.HARM_CATEGORY_HARASSMENT,
         threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
       },
-      // Add other safety settings as needed
+      {
+        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+      },
+      {
+        category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+      },
+      {
+        category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+      },
     ];
 
     const parts = [
       {
-        text: "give me a explanation for this image.:\n",
-        // text: "give me a better superb explanation for this image. what is this image, important, and more details.:\n",
+        // text: "give me a explanation for this image.:\n",
+        text: "give me a better superb explanation for this image. what is this image, important, and more details.:\n",
       },
       {
         inlineData: {
@@ -166,10 +179,7 @@ const DescriptionGenerator: React.FC<DescriptionGeneratorProps> = ({
 
       const response = result.response;
       setGeneratedDescription(response.text());
-      // console.log("response.text", response.text());
       return response.text();
-      // console.log("response.text()", response.text());
-      // console.log("generatedDescription", generatedDescription);
     } catch (error) {
       console.error(error);
       setGeneratedDescription("Error generating description.");
@@ -177,37 +187,45 @@ const DescriptionGenerator: React.FC<DescriptionGeneratorProps> = ({
   };
 
   const handleGenerateDescription = async () => {
-    console.log("Start generating description");
     setGenerating(true);
     const res = await generateDescription();
-    console.log("generatedDescription : ", res);
     onChangeDescription(res);
-    console.log("Finished generating description");
     setGenerating(false);
     return res;
   };
 
   return (
     <>
-      {/* {generatedDescription !== null && ( */}
-      <div className="generated-description">
-        <button onClick={handleGenerateDescription}>
+      {!generatedDescription && (
+        <button className="generate-btn" onClick={handleGenerateDescription}>
           Generate Description
         </button>
+      )}
 
-        {generatedDescription && (
-          <>
-            <h2>Generated Description</h2>
-            <TypeAnimation
-              sequence={[
-                generatedDescription || "Failed to generate description",
-              ]}
-              wrapper="span"
-              speed={90}
-            />
-          </>
-        )}
-      </div>
+      {generating && (
+        <div className="loader-container">
+          <PropagateLoader color="#8a2be2" size={20} speedMultiplier={1.3} />
+        </div>
+      )}
+      {generatedDescription && (
+        <div className="generated-description-container">
+          {/* <br /> */}
+
+          <br />
+          {generatedDescription && (
+            <>
+              {/* <h2>Generated Description</h2> */}
+              <TypeAnimation
+                sequence={[
+                  generatedDescription || "Failed to generate description",
+                ]}
+                wrapper="span"
+                speed={90}
+              />
+            </>
+          )}
+        </div>
+      )}
       {/* )} */}
     </>
   );

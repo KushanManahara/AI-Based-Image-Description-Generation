@@ -13,9 +13,24 @@ body {
 
 h1 {
   text-align: center;
-  color: white; /* Text color to match the gradient background */
+  color: #ffffff;
+  margin-bottom: 40px;
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
+p {
+  color: #dadada;
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.img-dec {
+  display: flex;
+  flex-direction: row;
+}
 .container {
   padding: 2rem;
   padding-left: 10%;
@@ -27,7 +42,7 @@ h1 {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  border: 2px solid blueviolet;
+  border: 2px solid #8a2be2;
   overflow: hidden;
   background: rgb(4, 5, 57);
 }
@@ -37,4 +52,8 @@ h1 {
   justify-content: center;
   align-items: center;
   margin-top: -40px;
+}
+
+.current-box {
+  background-color: #32174c;
 }

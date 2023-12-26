@@ -59,23 +59,26 @@ const App: React.FC = () => {
 
   return (
     <div className="container flex flex-grow">
-      <h1>Image Description Generator</h1>
+      <h1>Descriptify.ai</h1>
 
       {prompts.map((prompt, promptIndex) => (
-        <div key={promptIndex} className="generate-option">
+        <div
+          key={promptIndex}
+          className="generate-option d-flex justify-content-center"
+        >
           {promptIndex === prompts.length - 1 ? (
-            <div className="uploader-generator-box">
+            <div className="uploader-generator-box current-box">
               {/* Render ImageUploader and DescriptionGenerator only for the last prompt */}
-              <ImageUploader
-                onFileUpload={(file: File) =>
-                  handleFileUpload(file, promptIndex)
-                }
-              />
-              <Row>
-                <Col md={2}>
-                  <ImagePreview file={prompt.imageFile} />
-                </Col>
-                <Col md={6}>
+              <Col>
+                <ImageUploader
+                  onFileUpload={(file: File) =>
+                    handleFileUpload(file, promptIndex)
+                  }
+                />
+              </Col>
+              <div className="img-dec">
+                <ImagePreview file={prompt.imageFile} />
+                <div className="description-container">
                   {prompt.imageData && (
                     <DescriptionGenerator
                       apiKey={API_KEY}
@@ -86,12 +89,12 @@ const App: React.FC = () => {
                       }
                     />
                   )}
-                </Col>
-              </Row>
+                </div>
+              </div>
             </div>
           ) : (
-            <div className="generated-description">
-              <div>
+            <div className="uploader-generator-box">
+              <div className="img-dec">
                 <ImagePreview file={prompt.imageFile} />
                 <p>{prompt.description}</p>
               </div>

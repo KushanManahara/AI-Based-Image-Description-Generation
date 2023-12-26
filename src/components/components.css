@@ -1,4 +1,8 @@
 /* components.css */
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
 /* Style for the container div */
 div {
   margin-bottom: 20px;
@@ -12,9 +16,16 @@ label {
 
 /* Style for the file input */
 input[type="file"] {
-  display: none;
+  display: inline-block;
+  border: 2px solid #ddd;
+  border-radius: 5px;
 }
 
+.transparent-input {
+  background-color: transparent;
+  border: 1px solid #ced4da;
+  color: #fff;
+}
 /* Style for the custom file input button */
 label::after {
   content: "Select File";
@@ -38,24 +49,60 @@ div {
 }
 
 /* Style for the generated description container */
-.generated-description {
+.generated-description-container {
   border: 1px solid #ddd;
   padding: 15px;
   border-radius: 10px;
   color: #a7a7a7;
   font-size: 18px;
+  width: 95%;
+  padding-right: -10px;
 }
 
 .img-input-label {
   color: #a7a7a7;
   font-size: large;
+  width: max-content;
+}
+
+.generate-btn {
+  border-radius: 100px;
+  width: 250px;
+  height: 35px;
+  cursor: pointer;
+  background-color: transparent;
+  color: white;
+  border: 1px solid #ddd;
+}
+
+.generate-btn:hover {
+  background-color: rgb(166, 204, 222);
+  border: 1px solid #6d96ed;
+  color: black;
+}
+.description-container {
+  width: 100%;
 }
 
 .image-input-container {
   padding-left: 10px;
 }
+
+.img-preview-box {
+  width: max-content;
+  margin-right: 4rem;
+}
 /* Style for the generated description heading */
 h2 {
   color: #a7a7a7;
   margin-bottom: 10px;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: left;
+  margin-left: 7rem;
+  margin-top: 1rem;
+  width: 100%;
+  /* align-items: center; */
 }
