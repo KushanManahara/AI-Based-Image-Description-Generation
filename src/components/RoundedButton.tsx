@@ -1,14 +1,12 @@
-import React from "react";
-
 const RoundedButton = ({ onClick, children }: any) => {
   const buttonStyle = {
-    borderRadius: "10px", // Adjust the border-radius as needed
-    padding: "10px 20px", // Adjust padding as needed
-    backgroundColor: "#4285f4", // Button background color
-    color: "white", // Button text color
+    borderRadius: "10px",
+    padding: "10px 20px",
+    backgroundColor: "#4285f4",
+    color: "white",
     cursor: "pointer",
-    outline: "none", // Remove default outline
-    border: "none", // Remove default border
+    outline: "none",
+    border: "none",
   };
 
   return (

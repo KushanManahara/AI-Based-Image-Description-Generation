@@ -4,7 +4,7 @@ import DescriptionGenerator from "./components/DescriptionGenerator";
 import RoundedButton from "./components/RoundedButton";
 import "./App.css";
 import ImagePreview from "./components/ImagePreview";
-import { Row, Col } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 
 const API_KEY = process.env.REACT_APP_GEMINI_API_KEY || "";
 

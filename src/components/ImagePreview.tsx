@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row } from "react-bootstrap";
 
 interface ImagePreviewProps {
   file: File | null;
@@ -26,8 +25,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ file }) => {
 
   const imageUrl = URL.createObjectURL(file);
 
-  // Set the maximum width and height
-  const maxWidth = 250; // Set your maximum width here
+  const maxWidth = 250;
   const maxHeight = maxWidth / aspectRatio;
 
   return (
